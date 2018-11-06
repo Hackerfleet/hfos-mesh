@@ -35,8 +35,8 @@ durations as well as conditions..
 
 """
 
-from hfos.schemata.defaultform import savebutton
-from hfos.schemata.base import base_object
+from isomer.schemata.defaultform import savebutton
+from isomer.schemata.base import base_object
 
 MeshNodeSchema = base_object('meshnode')
 

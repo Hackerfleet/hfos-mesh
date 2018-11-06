@@ -44,11 +44,11 @@ This software package is a plugin module for HFOS.
           'hfos-protocols==0.0.1',
           'pyzmq==16.0.2'
       ],
-      entry_points="""[hfos.components]
+      entry_points="""[isomer.components]
     mesh=hfos.mesh.zmqmesh:ZMQMesh
-[hfos.schemata]
+[isomer.schemata]
     meshnode=hfos.mesh.meshnode:MeshNode
-[hfos.provisions]
+[isomer.provisions]
     meshnode=hfos.mesh.provisions.meshnode:provision
     """,
       test_suite="tests.main.main",

@@ -33,9 +33,9 @@ ZMQ connectors
 import random
 
 from circuits import Timer, Worker, task
-from hfos.database import objectmodels
-from hfos.component import ConfigurableComponent, handler
-from hfos.logger import hfoslog, hilight, error, warn, debug
+from isomer.database import objectmodels
+from isomer.component import ConfigurableComponent, handler
+from isomer.logger import isolog, hilight, error, warn, debug
 from time import time
 import threading
 
@@ -53,7 +53,7 @@ ZMQHELLO = 1
 class ZMQHandle(threading.Thread):
     def __init__(self, callback, sendcallback, peers, uuid):
         threading.Thread.__init__(self, daemon=True)
-        hfoslog("Started", emitter="ZMQThread")
+        isolog("Started", emitter="ZMQThread")
 
         self.loop = ioloop.IOLoop.instance()
         self.callback = callback
@@ -68,11 +68,11 @@ class ZMQHandle(threading.Thread):
         sendcallback(self.send)
 
     def send(self, msg, uuid):
-        hfoslog("Sending message: ", msg, " to ", uuid, emitter="ZMQThread")
+        isolog("Sending message: ", msg, " to ", uuid, emitter="ZMQThread")
         self.sockets[uuid].send_string(msg)
 
     def stop(self):
-        hfoslog("Stopping loop",lvl=debug, emitter="ZMQThread")
+        isolog("Stopping loop", lvl=debug, emitter="ZMQThread")
         self.running = False
         self.loop.stop()
         self._stop.set()
@@ -81,36 +81,36 @@ class ZMQHandle(threading.Thread):
         return self._stop.isSet()
 
     def cb(self, data):
-        hfoslog(data, emitter="ZMQThread")
+        isolog(data, emitter="ZMQThread")
         src = data[0]
         msg = data[1].decode('UTF8')
         if msg.startswith('OHAI'):
-            hfoslog('OHAI received:', msg, emitter="ZMQThread")
+            isolog('OHAI received:', msg, emitter="ZMQThread")
         if msg.startswith('HELLO'):
-            hfoslog("HELLO MESSAGE", emitter="ZMQThread")
+            isolog("HELLO MESSAGE", emitter="ZMQThread")
             uuid = msg.split(':')[1]
             if src not in self.routes.keys():
-                hfoslog("Unknown route, adding: ", uuid, emitter="ZMQThread")
+                isolog("Unknown route, adding: ", uuid, emitter="ZMQThread")
 
                 self.routes[uuid] = src
-                hfoslog("Calling Callback", lvl=debug, emitter="ZMQThread")
+                isolog("Calling Callback", lvl=debug, emitter="ZMQThread")
 
                 self.callback({
                     'state': ZMQHELLO,
                     'uuid': uuid
                 })
-                hfoslog("Callback called.", lvl=debug, emitter="ZMQThread")
+                isolog("Callback called.", lvl=debug, emitter="ZMQThread")
             else:
-                hfoslog("Duplicate Hello received", emitter="ZMQThread")
+                isolog("Duplicate Hello received", emitter="ZMQThread")
                 if uuid not in self.routes.items():
-                    hfoslog('Unknown UUID appeared on known route!', lvl=error, emitter="ZMQThread")
+                    isolog('Unknown UUID appeared on known route!', lvl=error, emitter="ZMQThread")
                 else:
-                    hfoslog('UUID appeared on another route!', lvl=warn, emitter="ZMQThread")
-            hfoslog('Current routes:', self.routes, emitter="ZMQThread")
+                    isolog('UUID appeared on another route!', lvl=warn, emitter="ZMQThread")
+            isolog('Current routes:', self.routes, emitter="ZMQThread")
 
     def addNode(self, uuid, ip):
         hoststring = 'tcp://' + ip + ':' + str(PORT)
-        hfoslog("ZMQ Dealer peer:", hoststring, emitter="ZMQThread")
+        isolog("ZMQ Dealer peer:", hoststring, emitter="ZMQThread")
         p = self.ctx.socket(zmq.DEALER)
         p.connect(hoststring)
         p.send_string('HELLO:' + self.uuid)
@@ -129,12 +129,12 @@ class ZMQHandle(threading.Thread):
         for peer in self.peers:
             self.addNode(peer['uuid'], peer['ip'])
 
-        hfoslog("Entering thread loop", lvl=debug, emitter="ZMQThread")
+        isolog("Entering thread loop", lvl=debug, emitter="ZMQThread")
         self.loop.start()
         # from time import sleep
         # while self.running:
         #    sleep(0.1)
-        hfoslog("Exiting thread loop", lvl=debug, emitter="ZMQThread")
+        isolog("Exiting thread loop", lvl=debug, emitter="ZMQThread")
 
 
 class ZMQMesh(ConfigurableComponent):
