@@ -40,8 +40,8 @@ This software package is a plugin module for HFOS.
 """,
       dependency_links=[],
       install_requires=[
-          'hfos>=1.2.0',
-          'hfos-protocols==0.0.1',
+          'isomer>=1.0.0',
+          'isomer-protocols==0.0.1',
           'pyzmq==16.0.2'
       ],
       entry_points="""[isomer.components]
