@@ -25,7 +25,7 @@
 import angular from 'angular';
 import uirouter from 'angular-ui-router';
 
-import { routing } from './mesh.config.js';
+import {routing} from './mesh.config.js';
 
 import meshcomponent from './mesh/mesh.js';
 import template from './mesh/mesh.tpl.html';
