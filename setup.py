@@ -3,7 +3,7 @@
 
 # HFOS - Hackerfleet Operating System
 # ===================================
-# Copyright (C) 2011-2018 Heiko 'riot' Weinen <riot@c-base.org> and others.
+# Copyright (C) 2011-2019 Heiko 'riot' Weinen <riot@c-base.org> and others.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -23,33 +23,50 @@ __license__ = "AGPLv3"
 
 from setuptools import setup, find_packages
 
-setup(name="hfos-mesh",
-      version="0.0.1",
-      description="hfos-mesh - a mesh network protocol",
-      author="Hackerfleet Community",
-      author_email="riot@c-base.org",
-      url="https://github.com/hackerfleet/hfos-mesh",
-      license="GNU Affero General Public License v3",
-      packages=find_packages(),
-      long_description="""HFOS - Mesh
+setup(
+    name="hfos-mesh",
+    version="0.0.1",
+    description="hfos-mesh - a mesh network protocol",
+    author="Hackerfleet Community",
+    author_email="riot@c-base.org",
+    url="https://github.com/hackerfleet/hfos-mesh",
+    license="GNU Affero General Public License v3",
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Environment :: Web Environment',
+        'Framework :: Isomer :: 1',
+        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
+        'Operating System :: Linux',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: Implementation :: PyPy',
+        'Programming Language :: Python :: Implementation :: CPython'
+    ],
+    packages=find_packages(),
+    include_package_data=True,
+    long_description="""HFOS - Mesh
 ===========
 
 A modern, opensource approach to mesh networking of HFOS nodes.
 
 This software package is a plugin module for HFOS.
 """,
-      dependency_links=[],
-      install_requires=[
-          'isomer>=1.0.0',
-          'isomer-protocols==0.0.1',
-          'pyzmq==16.0.2'
-      ],
-      entry_points="""[isomer.components]
-    mesh=hfos.mesh.zmqmesh:ZMQMesh
+    dependency_links=[],
+    install_requires=[
+        'isomer>=1.0.0',
+        'isomer-protocols==0.0.1',
+        'pyzmq==16.0.2'
+    ],
+    entry_points="""[isomer.components]
+    mesh=isomer.mesh.zmqmesh:ZMQMesh
 [isomer.schemata]
-    meshnode=hfos.mesh.meshnode:MeshNode
+    meshnode=isomer.mesh.meshnode:MeshNode
 [isomer.provisions]
-    meshnode=hfos.mesh.provisions.meshnode:provision
+    meshnode=isomer.mesh.provisions.meshnode:provision
     """,
-      test_suite="tests.main.main",
-      )
+    test_suite="tests.main.main",
+)
