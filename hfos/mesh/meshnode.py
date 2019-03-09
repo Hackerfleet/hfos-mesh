@@ -3,7 +3,7 @@
 
 # HFOS - Hackerfleet Operating System
 # ===================================
-# Copyright (C) 2011-2018 Heiko 'riot' Weinen <riot@c-base.org> and others.
+# Copyright (C) 2011-2019 Heiko 'riot' Weinen <riot@c-base.org> and others.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -41,10 +41,14 @@ from isomer.schemata.base import base_object
 MeshNodeSchema = base_object('meshnode')
 
 MeshNodeSchema['properties'].update({
-    'notes': {'type': 'string', 'format': 'html', 'title': 'User notes',
-              'description': 'Entry notes'},
-    'hub': {'type': 'boolean', 'title': 'Hub node',
-            'description': 'This node has data about other nodes'},
+    'notes': {
+        'type': 'string', 'format': 'html', 'title': 'User notes',
+        'description': 'Entry notes'
+    },
+    'hub': {
+        'type': 'boolean', 'title': 'Hub node',
+        'description': 'This node has data about other nodes'
+    },
     'address': {
         'type': 'string',
         'format': 'ip-address',

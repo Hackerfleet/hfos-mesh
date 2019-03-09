@@ -3,7 +3,7 @@
 
 # HFOS - Hackerfleet Operating System
 # ===================================
-# Copyright (C) 2011-2018 Heiko 'riot' Weinen <riot@c-base.org> and others.
+# Copyright (C) 2011-2019 Heiko 'riot' Weinen <riot@c-base.org> and others.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -124,7 +124,7 @@ class ZMQHandle(threading.Thread):
         # s.setsockopt(zmq.SUBSCRIBE, b'')
         stream = zmqstream.ZMQStream(s, self.loop)
         stream.on_recv(self.cb)
-        #print(s.getsockopt(zmq.LAST_ENDPOINT))
+        # print(s.getsockopt(zmq.LAST_ENDPOINT))
 
         for peer in self.peers:
             self.addNode(peer['uuid'], peer['ip'])
